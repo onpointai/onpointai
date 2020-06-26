@@ -1,4 +1,313 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://onpointai.github.io/onpointai/feed.xml" rel="self" type="application/atom+xml" /><link href="https://onpointai.github.io/onpointai/" rel="alternate" type="text/html" /><updated>2020-06-26T10:12:43-05:00</updated><id>https://onpointai.github.io/onpointai/feed.xml</id><title type="html">onpointai</title><subtitle>My AI/ML Journey</subtitle><entry><title type="html">Fastpages Notebook Blog Post</title><link href="https://onpointai.github.io/onpointai/jupyter/2020/02/20/test.html" rel="alternate" type="text/html" title="Fastpages Notebook Blog Post" /><published>2020-02-20T00:00:00-06:00</published><updated>2020-02-20T00:00:00-06:00</updated><id>https://onpointai.github.io/onpointai/jupyter/2020/02/20/test</id><content type="html" xml:base="https://onpointai.github.io/onpointai/jupyter/2020/02/20/test.html">&lt;!--
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://onpointai.github.io/onpointai/feed.xml" rel="self" type="application/atom+xml" /><link href="https://onpointai.github.io/onpointai/" rel="alternate" type="text/html" /><updated>2020-06-26T10:16:39-05:00</updated><id>https://onpointai.github.io/onpointai/feed.xml</id><title type="html">onpointai</title><subtitle>My AI/ML Journey</subtitle><entry><title type="html">Sports Video Classification</title><link href="https://onpointai.github.io/onpointai/ai/ml/video%20classification/2020/05/21/videoclassification.html" rel="alternate" type="text/html" title="Sports Video Classification" /><published>2020-05-21T00:00:00-05:00</published><updated>2020-05-21T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/ai/ml/video%20classification/2020/05/21/videoclassification</id><content type="html" xml:base="https://onpointai.github.io/onpointai/ai/ml/video%20classification/2020/05/21/videoclassification.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;The simplest way to classify the type of video is by examining individual frames of the video ie treat individual frames as images, classify the images and then do some sort of averaging or smoothing over a few frames to predict the current display.&lt;/p&gt;
+
+&lt;p&gt;Once we understand what goes on here  we can explore the &lt;a href=&quot;https://blog.coast.ai/five-video-classification-methods-implemented-in-keras-and-tensorflow-99cad29cc0b5&quot;&gt;other&lt;/a&gt; methods which take up more setup and compute.&lt;/p&gt;
+
+&lt;p&gt;The main package here is &lt;a href=&quot;https://opencv.org&quot;&gt;OpenCV&lt;/a&gt;, a library aimed at real-time computer vision tasks.&lt;/p&gt;
+
+&lt;p&gt;The dataset used was a collection of images curated using Google image search.&lt;/p&gt;
+
+&lt;p&gt;├── Sports-Type-Classifier&lt;br /&gt;
+│   ├── data&lt;br /&gt;
+│   │   ├── badminton [938 entries]&lt;br /&gt;
+│   │   ├── baseball [746 entries]&lt;br /&gt;
+│   │   ├── basketball [495 entries]&lt;br /&gt;
+│   │   ├── boxing [705 entries]&lt;br /&gt;
+│   │   ├── chess [481 entries]&lt;br /&gt;
+│   │   ├── cricket [715 entries]&lt;br /&gt;
+│   │   ├── fencing [635 entries]&lt;br /&gt;
+│   │   ├── football [799 entries]&lt;br /&gt;
+│   │   ├── formula1 [687 entries]&lt;br /&gt;
+│   │   ├── gymnastics [719 entries]&lt;br /&gt;
+│   │   ├── hockey [572 entries]&lt;br /&gt;
+│   │   ├── ice_hockey [715 entries]&lt;br /&gt;
+│   │   ├── kabaddi [454 entries]&lt;br /&gt;
+│   │   ├── motogp [679 entries]&lt;br /&gt;
+│   │   ├── shooting [536 entries]&lt;br /&gt;
+│   │   ├── swimming [689 entries]&lt;br /&gt;
+│   │   ├── table_tennis [713 entries]&lt;br /&gt;
+│   │   ├── tennis [718 entries]&lt;br /&gt;
+│   │   ├── volleyball [713 entries]&lt;br /&gt;
+│   │   ├── weight_lifting [577 entries] &lt;br /&gt;
+│   │   ├── wrestling [611 entries]&lt;br /&gt;
+│   │   ├── wwe [671 entries]&lt;/p&gt;
+
+&lt;h2 id=&quot;setup&quot;&gt;Setup&lt;/h2&gt;
+&lt;p&gt;The &lt;a href=&quot;https://github.com/onpointai/keras-video-classification&quot;&gt;repo&lt;/a&gt; contains the data, Colab Jupyter notebooks and trained weights for different training regimes.&lt;/p&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.youtube.com/watch?v=TZhSxFWh7wc&quot; title=&quot;Input&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/TZhSxFWh7wc/0.jpg&quot; alt=&quot;Input&quot; /&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;http://www.youtube.com/watch?v=i9O1bb89Z9c&quot; title=&quot;Prediction&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/i9O1bb89Z9c/0.jpg&quot; alt=&quot;Prediction&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.youtube.com/watch?v=HjaCPFLzzLI&quot; title=&quot;Input&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/HjaCPFLzzLI/0.jpg&quot; alt=&quot;Input&quot; /&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;http://www.youtube.com/watch?v=U03uXXqwbA8&quot; title=&quot;Prediction&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/U03uXXqwbA8/0.jpg&quot; alt=&quot;Prediction&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.youtube.com/watch?v=QaEUxM0N0p8&quot; title=&quot;Input&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/QaEUxM0N0p8/0.jpg&quot; alt=&quot;Input&quot; /&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;http://www.youtube.com/watch?v=G6YeY-KNuJM&quot; title=&quot;Prediction&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/G6YeY-KNuJM/0.jpg&quot; alt=&quot;Prediction&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/onpointai_logo.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Overview The simplest way to classify the type of video is by examining individual frames of the video ie treat individual frames as images, classify the images and then do some sort of averaging or smoothing over a few frames to predict the current display.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://onpointai.github.io/onpointai/images/videoclassif.png" /><media:content medium="image" url="https://onpointai.github.io/onpointai/images/videoclassif.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Multi-label Image Classification</title><link href="https://onpointai.github.io/onpointai/ai/ml/multi-label%20image%20classification/2020/05/19/multilabelimageclass.html" rel="alternate" type="text/html" title="Multi-label Image Classification" /><published>2020-05-19T00:00:00-05:00</published><updated>2020-05-19T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/ai/ml/multi-label%20image%20classification/2020/05/19/multilabelimageclass</id><content type="html" xml:base="https://onpointai.github.io/onpointai/ai/ml/multi-label%20image%20classification/2020/05/19/multilabelimageclass.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;This is a tutorial from &lt;a href=&quot;https://www.analyticsvidhya.com/blog/2019/04/build-first-multi-label-image-classification-model-python/#&quot;&gt;Analytics Vidhya&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The dataset of images contain more than two categories ie it is not a simple either/or&lt;/p&gt;
+
+&lt;p&gt;Each image in the dataset can contain only one category&lt;/p&gt;
+
+&lt;p&gt;Example: A dataset containing images such as dog, cat, rabbit, parrot
+Each image contains only dog, cat, parrot rabbit&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/multi-label-img-class.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The above is know as multi-label image classification.&lt;/p&gt;
+
+&lt;p&gt;Question: Can we predict the genre of a movie by looking at the movie poster? And ofcourse a movie can belong to more than one genre.
+&lt;img src=&quot;/onpointai//images/multi-label-img-class-2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The key is in the output layer - use a sigmoid activation instead of softmax. With Softmax as the probablity of one increases the probability of the other classses decrease (becuase the sum must equal 1). With Sigmoid however the probabilities are independent of each other. So with sigmoid the architecture will internally create N models where N is the number of classes. Cool huh?!&lt;/p&gt;
+
+&lt;h2 id=&quot;setup&quot;&gt;Setup&lt;/h2&gt;
+&lt;p&gt;For details of the model and data see &lt;a href=&quot;https://github.com/onpointai/multilabel-image-classification&quot;&gt;repo&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Note: No attempt has been made to finetune the architecture and reduce the amount of overfitting and hence get a better training/validation loss.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/multi-label-op-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/onpointai_logo.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Overview This is a tutorial from Analytics Vidhya</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://onpointai.github.io/onpointai/images/multilabel.png" /><media:content medium="image" url="https://onpointai.github.io/onpointai/images/multilabel.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Style Transfer using Neural Networks</title><link href="https://onpointai.github.io/onpointai/ai/ml/style%20transfer/2020/05/18/neuralstyletransfer.html" rel="alternate" type="text/html" title="Style Transfer using Neural Networks" /><published>2020-05-18T00:00:00-05:00</published><updated>2020-05-18T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/ai/ml/style%20transfer/2020/05/18/neuralstyletransfer</id><content type="html" xml:base="https://onpointai.github.io/onpointai/ai/ml/style%20transfer/2020/05/18/neuralstyletransfer.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;p&gt;This method renders the contents of a Original image in the style of a Reference image. For example in an image of a cityscape the contents can be considered as the hard edges of the buildings. The Reference image can contain lots of swirly patters and colours which will be know as the style of the image. 
+The loss function is defined in parameter space as the difference between the content and style of the images as laid out below:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Loss = distance((style(reference_image) - style(generated_image)) +  
+        (distance(content(original_image) - content(generated_image))
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;As a workflow exercise I attempted to render the image of an F1 car in the style of Picasso!
+I used images of recent Racing Point and Renault F1 cars.&lt;/p&gt;
+
+&lt;h2 id=&quot;setup&quot;&gt;Setup&lt;/h2&gt;
+&lt;p&gt;The notebook, models and data are contained &lt;a href=&quot;https://github.com/onpointai/f1car-style-transfer&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I trained it on Google Colab using both Tensorflow and Pytorch (separately ofcourse!)
+The trained model is implemented using a webapp. The user is asked to select an image and the analysis is displayed.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai/images/rp-style-transfer.png&quot; alt=&quot;&quot; title=&quot;Racing Point&quot; /&gt;
+&lt;img src=&quot;/onpointai/images/renault-style-transfer.png&quot; alt=&quot;&quot; title=&quot;Renault&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Loss = distance((style(reference_image) - style(generated_image)) +  
+        (distance(content(original_image) - content(generated_image))
+        
+original_image = a picture of an F1 car 
+reference_image = a style image such as Picasso
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/onpointai_logo.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Overview</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://onpointai.github.io/onpointai/images/styletransfer.png" /><media:content medium="image" url="https://onpointai.github.io/onpointai/images/styletransfer.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Predict F1 Car Constructor from Image</title><link href="https://onpointai.github.io/onpointai/ai/ml/image%20classification/2020/05/18/f1carspredictor.html" rel="alternate" type="text/html" title="Predict F1 Car Constructor from Image" /><published>2020-05-18T00:00:00-05:00</published><updated>2020-05-18T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/ai/ml/image%20classification/2020/05/18/f1carspredictor</id><content type="html" xml:base="https://onpointai.github.io/onpointai/ai/ml/image%20classification/2020/05/18/f1carspredictor.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;p&gt;This is an exercise based on Formula 1 cars and is  aimed at predicting which team a car belongs to by analysing an image. The image can be from any angle. This is an end-to-end example ir from gathering the data, training a model and deploying the trained model using a webapp on a local server.&lt;/p&gt;
+
+&lt;h2 id=&quot;setup&quot;&gt;Setup&lt;/h2&gt;
+
+&lt;p&gt;The training setup, data are in this &lt;a href=&quot;https://github.com/onpointai/f1cars-detector&quot;&gt;repo&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This is a good example of a complete workflow&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;collecting data using google web search (local)&lt;/li&gt;
+  &lt;li&gt;cleaning the data (removing duplicate images and other rubbish) (local)&lt;/li&gt;
+  &lt;li&gt;porting data to Google Colab - When i was doing this I did not have my Github a/c organised properly&lt;br /&gt;
+  Otherwise I would have done git init and ported the local repo to github&lt;br /&gt;
+  From Google Colab it is easy to clone the Github repo&lt;/li&gt;
+  &lt;li&gt;Once the data is in repo start a new jupyter notebook and select a GPU for training.&lt;/li&gt;
+  &lt;li&gt;Download the trained model to the local dir&lt;/li&gt;
+  &lt;li&gt;Modify the webapp to point to the trained model and do the predictions&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Note: I only used about 75 images per class (10 classes) to cut down on the training time.&lt;/p&gt;
+
+&lt;p&gt;I used Fastai’s recommended Starlette web api and with a bit of playing around with the css and html file got something suitable.&lt;/p&gt;
+
+&lt;p&gt;This is only meant for demo purposes and to motivate me to carry on with the ret of the course.&lt;/p&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/f1carpred-fp-1.png&quot; alt=&quot;&quot; title=&quot;Start&quot; /&gt;
+&lt;img src=&quot;/onpointai//images/f1carpred-fp-3.png&quot; alt=&quot;&quot; title=&quot;Output&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Suggested Improvements:&lt;/p&gt;
+  &lt;ul class=&quot;task-list&quot;&gt;
+    &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Add more training data&lt;/li&gt;
+    &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Clean training data&lt;/li&gt;
+    &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Overfit and then play around with hyperparameters&lt;/li&gt;
+    &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Give webapp better UI&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/onpointai_logo.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Overview</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://onpointai.github.io/onpointai/images/f1cardpred.png" /><media:content medium="image" url="https://onpointai.github.io/onpointai/images/f1cardpred.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Stochastic Gradient Descent</title><link href="https://onpointai.github.io/onpointai/ai/ml%20gradient%20descent/2020/05/17/sgd.html" rel="alternate" type="text/html" title="Stochastic Gradient Descent" /><published>2020-05-17T00:00:00-05:00</published><updated>2020-05-17T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/ai/ml%20gradient%20descent/2020/05/17/sgd</id><content type="html" xml:base="https://onpointai.github.io/onpointai/ai/ml%20gradient%20descent/2020/05/17/sgd.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;p&gt;ML is basically this - you make a prediction, see how far that prediction is from the truth, fine-tune your prediction and keep going until the difference between between the prediction and the actual reaches an acceptable level. 
+If we imagine the loss function plotted as a U curve then we are trying to reach the bottom of the curve as quickly as possible ie minimise the loss. From our starting point, a guess, we then take a small step in the direction of lower loss.
+The small step is known as the learning rate and the direction of lower loss is worked out from the slope of the curve.&lt;/p&gt;
+
+&lt;h2 id=&quot;minimising-the-loss&quot;&gt;Minimising the loss&lt;/h2&gt;
+
+&lt;p&gt;Below is a regression example. The pink dots are the initial set of data. To this we have to find a general approximation that will satisfy any new points.&lt;br /&gt;
+Our initial guess is the black line.&lt;br /&gt;
+&lt;img src=&quot;/onpointai//images/sgd-1.png&quot; alt=&quot;&quot; title=&quot;START&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We then go through the fllowing sequence:
+Loss = New Value - Actual Value
+Find slope of the loss function
+Move down the loss curve by a small amount (the Learning Rate)
+Find the new loss&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.youtube.com/watch?v=rLf_0gN3NFo&quot; title=&quot;MINIMISING THE LOSS&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/rLf_0gN3NFo/0.jpg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Pytorch implementation&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;y is the actual
+y_hat is the prediction (based on a set of weights a)
+loss is the mean squared error between y_hat and y
+
+
+def mse(y_hat,y):
+    return((y_hat-y)**2).mean()
+
+def update():
+    y_hat = x@a
+    loss=mse(y_hat,y)
+    loss.backward()
+    with torch.no_grad():
+        a.sub_(lr * a.grad)
+        a.grad.zero_()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://course.fast.ai/videos/?lesson=2&quot;&gt;Fast.ai&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://machinelearningmastery.com/how-to-choose-loss-functions-when-training-deep-learning-neural-networks/&quot;&gt;Machine Learning Mastery&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a href=&quot;&amp;quot;https://github.githubassets.com/images/icons/emoji/bowtie.png?v8&amp;quot;&quot;&gt;D&lt;/a&gt;
+:bowtie:
+—
+&lt;img src=&quot;/onpointai//images/onpointai_logo.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">Overview</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://onpointai.github.io/onpointai/images/sgd.png" /><media:content medium="image" url="https://onpointai.github.io/onpointai/images/sgd.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">An Overview of AI/ML</title><link href="https://onpointai.github.io/onpointai/ai/ml/visuals/2020/05/15/overview.html" rel="alternate" type="text/html" title="An Overview of AI/ML" /><published>2020-05-15T00:00:00-05:00</published><updated>2020-05-15T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/ai/ml/visuals/2020/05/15/overview</id><content type="html" xml:base="https://onpointai.github.io/onpointai/ai/ml/visuals/2020/05/15/overview.html">&lt;p&gt;The contents of this page should be treated as a set of flashcards with each giving some insight into the definition, structure and scope of AI tools in everyday use.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Note: Reinforcement Learning (think Apha Go from Deep Dream/Google) has no practical applications at the moment for me and will therefore not be discussed.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/ai-makeup.png&quot; alt=&quot;&quot; title=&quot;ML DATA TYPES&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/ml-schematic-1.png&quot; alt=&quot;&quot; title=&quot;ML vs TRADITIONAL PROG&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/ml-schematic-2.png&quot; alt=&quot;&quot; title=&quot;ML TRAINING &amp;amp; DEPLOYMENT&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/MLIADL.jpg&quot; alt=&quot;&quot; title=&quot;AI-ML-DL&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/fastai-avenues.png&quot; alt=&quot;&quot; title=&quot;AI/ML Usage Landscape&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/keras-speed-loop.png&quot; alt=&quot;&quot; title=&quot;THE NEED FOR SPEED&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It has been shown that the winner is not necessarily the smartest or the one with the best computer. Instead it is the person who can develop their ideas quickly.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/onpointai_logo.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">The contents of this page should be treated as a set of flashcards with each giving some insight into the definition, structure and scope of AI tools in everyday use. Note: Reinforcement Learning (think Apha Go from Deep Dream/Google) has no practical applications at the moment for me and will therefore not be discussed.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://onpointai.github.io/onpointai/images/neurons-582050_1280.jpg" /><media:content medium="image" url="https://onpointai.github.io/onpointai/images/neurons-582050_1280.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Reference Material</title><link href="https://onpointai.github.io/onpointai/markdown/2020/05/14/referencematerial.html" rel="alternate" type="text/html" title="Reference Material" /><published>2020-05-14T00:00:00-05:00</published><updated>2020-05-14T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/markdown/2020/05/14/referencematerial</id><content type="html" xml:base="https://onpointai.github.io/onpointai/markdown/2020/05/14/referencematerial.html">&lt;p&gt;This is a list of links to articles, blogposts, videos, tutorials that I have found very useful on my ML journey. It serves as a useful reference point and is ever-growing.&lt;/p&gt;
+
+&lt;h4 id=&quot;setup&quot;&gt;Setup&lt;/h4&gt;
+
+&lt;h4 id=&quot;tensorflow-or-pytorch&quot;&gt;Tensorflow or Pytorch?&lt;/h4&gt;
+
+&lt;h4 id=&quot;google-colab&quot;&gt;Google Colab&lt;/h4&gt;
+
+&lt;h4 id=&quot;i-love-articles-tutorials-videos-by-the-following&quot;&gt;I love articles, tutorials, videos by the following:&lt;/h4&gt;
+&lt;p&gt;Adrian Rosebrock &lt;a href=&quot;https://www.pyimagesearch.com&quot;&gt;Pyimagesearch&lt;/a&gt;. &lt;br /&gt;
+Andrej Karpathy &lt;a href=&quot;http://karpathy.github.io&quot;&gt;blog&lt;/a&gt;. &lt;br /&gt;
+Chris Olah &lt;a href=&quot;https://colah.github.io&quot;&gt;blog&lt;/a&gt;.&lt;br /&gt;
+Andrew Ng &lt;a href=&quot;https://www.coursera.org/instructor/andrewng&quot;&gt;Coursera&lt;/a&gt;.&lt;br /&gt;
+Francois Chollet &lt;a href=&quot;https://livebook.manning.com/book/deep-learning-with-python/about-this-book/&quot;&gt;Book&lt;/a&gt;.&lt;br /&gt;
+Jeremey Howard &lt;a href=&quot;https://www.fast.ai/about/#jeremy&quot;&gt;Fast.ai&lt;/a&gt;.&lt;br /&gt;
+Rachel Thomas &lt;a href=&quot;https://www.fast.ai/about/#rachel&quot;&gt;Fast.ai&lt;/a&gt;.&lt;br /&gt;
+Chris Albon &lt;a href=&quot;https://chrisalbon.com&quot;&gt;Great flashcards - Buy them!&lt;/a&gt;. &lt;br /&gt;
+Aakash Nain &lt;a href=&quot;https://www.jovian.ml&quot;&gt;Jovian&lt;/a&gt;.&lt;br /&gt;
+Hannah Fry [Makes number fun!]http://www.hannahfry.co.uk().&lt;br /&gt;
+Jason Brownlee &lt;a href=&quot;https://machinelearningmastery.com&quot;&gt;Tutorials&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;powerful-quotes&quot;&gt;Powerful Quotes&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;F Chollet:&lt;br /&gt;
+“You don’t need to know everything. You  don’t really need a formal background in this or that – though it helps, you don’t even need a PhD. You do, however, need to be constantly learning, be curious, read books. Don’t be “too busy” to learn, or otherwise proud of your ignorance.”&lt;br /&gt;
+“Honestly, the question is not, and has never been, “ can ML replace radiologists/etc” (which won’t happen in the foreseeable future). The question is, how can radiology/etc utilise ML to improve outcomes, decrease the cost of car, and broaden accessibility.”&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Geoff Hinton:&lt;br /&gt;
+“Read enough sp you start developing intuitions and then trust your intuitions and go for it!.”&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Andrew Ng:&lt;br /&gt;
+“Deep Learning is a superpower. With it you can make a computer see, synthesize novel art, translate languages, render a medical diagnosis, or build pieces of a car that can drive itself. If that isn’t a superpower, I don’t know what is.”&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+&lt;hr /&gt;
+&lt;h4 id=&quot;ignore-stuff-below&quot;&gt;Ignore stuff below.&lt;/h4&gt;
+
+&lt;div class=&quot;Toast Toast--warning googoo&quot;&gt;
+   &lt;span class=&quot;Toast-icon&quot;&gt;&lt;svg class=&quot;octicon octicon-alert octicon octicon-alert&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;
+   &lt;span class=&quot;Toast-content&quot;&gt;You can include alert boxes&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;p&gt;…and…&lt;/p&gt;
+
+&lt;div class=&quot;Toast&quot;&gt;
+   &lt;span class=&quot;Toast-icon&quot;&gt;&lt;svg class=&quot;octicon octicon-info octicon octicon-info&quot; viewBox=&quot;0 0 14 16&quot; version=&quot;1.1&quot; width=&quot;14&quot; height=&quot;16&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;
+   &lt;span class=&quot;Toast-content&quot;&gt;You can include info boxes&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Python code and output:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Prints '2'
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;tables&quot;&gt;Tables&lt;/h2&gt;
+
+&lt;p&gt;| Tensorflow | Pytorch |
+|-|-|
+| Keras | Fastai |
+—
+&lt;img src=&quot;/onpointai//images/onpointai_logo.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">This is a list of links to articles, blogposts, videos, tutorials that I have found very useful on my ML journey. It serves as a useful reference point and is ever-growing.</summary></entry><entry><title type="html">Fastpages Notebook Blog Post</title><link href="https://onpointai.github.io/onpointai/jupyter/2020/02/20/test.html" rel="alternate" type="text/html" title="Fastpages Notebook Blog Post" /><published>2020-02-20T00:00:00-06:00</published><updated>2020-02-20T00:00:00-06:00</updated><id>https://onpointai.github.io/onpointai/jupyter/2020/02/20/test</id><content type="html" xml:base="https://onpointai.github.io/onpointai/jupyter/2020/02/20/test.html">&lt;!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
