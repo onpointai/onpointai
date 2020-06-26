@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Using Deep Learning to detect Pneumonia in X-ray images | onpointai</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Using Deep Learning to detect Pneumonia in X-ray images" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Using Pytorch to develop a Deep Learning framework to predict pneumonia in X-ray images" />
+<meta property="og:description" content="Using Pytorch to develop a Deep Learning framework to predict pneumonia in X-ray images" />
+<link rel="canonical" href="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-project-xray-1.html" />
+<meta property="og:url" content="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-project-xray-1.html" />
+<meta property="og:site_name" content="onpointai" />
+<meta property="og:image" content="https://onpointai.github.io/onpointai/images/xray-pneumonia-1.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-26T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Using Pytorch to develop a Deep Learning framework to predict pneumonia in X-ray images","@type":"BlogPosting","headline":"Using Deep Learning to detect Pneumonia in X-ray images","dateModified":"2020-06-26T00:00:00-05:00","datePublished":"2020-06-26T00:00:00-05:00","image":"https://onpointai.github.io/onpointai/images/xray-pneumonia-1.png","url":"https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-project-xray-1.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-project-xray-1.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/onpointai/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://onpointai.github.io/onpointai/feed.xml" title="onpointai" /><link rel="shortcut icon" type="image/x-icon" href="/onpointai/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Using Deep Learning to detect Pneumonia in X-ray images | onpointai</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Using Deep Learning to detect Pneumonia in X-ray images" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Using Pytorch to develop a Deep Learning framework to predict pneumonia in X-ray images" />
+<meta property="og:description" content="Using Pytorch to develop a Deep Learning framework to predict pneumonia in X-ray images" />
+<link rel="canonical" href="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-project-xray-1.html" />
+<meta property="og:url" content="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-project-xray-1.html" />
+<meta property="og:site_name" content="onpointai" />
+<meta property="og:image" content="https://onpointai.github.io/onpointai/images/xray-pneumonia-1.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-26T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Using Pytorch to develop a Deep Learning framework to predict pneumonia in X-ray images","@type":"BlogPosting","headline":"Using Deep Learning to detect Pneumonia in X-ray images","dateModified":"2020-06-26T00:00:00-05:00","datePublished":"2020-06-26T00:00:00-05:00","image":"https://onpointai.github.io/onpointai/images/xray-pneumonia-1.png","url":"https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-project-xray-1.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-project-xray-1.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://onpointai.github.io/onpointai/feed.xml" title="onpointai" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/onpointai/">onpointai</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/onpointai/about/">About Me</a><a class="page-link" href="/onpointai/search/">Search</a><a class="page-link" href="/onpointai/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Using Deep Learning to detect Pneumonia in X-ray images</h1><p class="page-description">Using Pytorch to develop a Deep Learning framework to predict pneumonia in X-ray images</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-26T00:00:00-05:00" itemprop="datePublished">
+        Jun 26, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/onpointai/categories/#jovian">jovian</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/onpointai/categories/#pytorch">pytorch</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/onpointai/categories/#transfer learning">transfer learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/onpointai/categories/#fastpages">fastpages</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/onpointai/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/onpointai/onpointai/tree/master/_notebooks/2020-06-26-jovian-project-xray-1.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/onpointai/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/onpointai/onpointai/master?filepath=_notebooks%2F2020-06-26-jovian-project-xray-1.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/onpointai/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/onpointai/onpointai/blob/master/_notebooks/2020-06-26-jovian-project-xray-1.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/onpointai/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#About">About </a></li>
+<li class="toc-entry toc-h1"><a href="#Import-libraries">Import libraries </a></li>
+<li class="toc-entry toc-h1"><a href="#Colab-setup-and-getting-data-from-Kaggle">Colab setup and getting data from Kaggle </a></li>
+<li class="toc-entry toc-h1"><a href="#Data-exploration">Data exploration </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Image-transforms">Image transforms </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Transfer-Learning-model">Transfer Learning model </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Use-a-Resnet34-model-with-our-custom-classifier-for-X-ray-pneumonia-images">Use a Resnet34 model with our custom classifier for X-ray pneumonia images </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Setup-the-Training-(and-Validation)-model">Setup the Training (and Validation) model </a></li>
+<li class="toc-entry toc-h1"><a href="#Check-if-GPU-is-available">Check if GPU is available </a></li>
+<li class="toc-entry toc-h1"><a href="#Run-the-Training-(and-Validation)-model">Run the Training (and Validation) model </a></li>
+<li class="toc-entry toc-h1"><a href="#Testing-(Inference)">Testing (Inference) </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Save-the-interim-model-(checkpoint)">Save the interim model (checkpoint) </a></li>
+<li class="toc-entry toc-h3"><a href="#Visualise-the-Training/Validation-images">Visualise the Training/Validation images </a></li>
+<li class="toc-entry toc-h3"><a href="#Visualise-the-predictions">Visualise the predictions </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Lessons-Learned">Lessons Learned </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-06-26-jovian-project-xray-1.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="About">
+<a class="anchor" href="#About" aria-hidden="true"><span class="octicon octicon-link"></span></a>About<a class="anchor-link" href="#About"> </a>
+</h1>
+<p>This blog is towards the <a href="https://jovian.ml/forum/t/assignment-5-course-project/1563">Course Project</a> for the [Pytorch Zero to GANS] free online course(<a href="https://jovian.ml/forum/c/pytorch-zero-to-gans/18">https://jovian.ml/forum/c/pytorch-zero-to-gans/18</a>) run by <a href="https://www.jovian.ml">JOVIAN.ML</a>.</p>
+<p>The course <a href="https://jovian.ml/forum/t/assignment-4-in-class-data-science-competition/1564/2">competition</a> was based on analysing protein cells with muti-label classification.</p>
+<p>Therefore, to extend my understanding of dealing with medical imaging I decided to use the <a href="https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia">X-Ray image database</a> in Kaggle.</p>
+<p>Seeing as I ran out of GPU hours on Kaggle because of the competition (restricted to 30hrs/week at the time of writing June 2020) I opted to use Google Colab.</p>
+<p>This blog is in the form of a Jupyter notebook and inspired by <a href="https://github.com/viritaromero/Detecting-Pneumonia-in-Chest-X-Rays/blob/master/Detecting_Pneumonia.ipynb">link</a>.</p>
+<p>The blog talks about getting the dataset in Google Colab, explore the dataset, develop the training model, metrics and then does some preliminary training to get a model which is then used to make a few predictions. 
+I will then talk about some of the lessons learned.</p>
+<blockquote>
+<p>Warning! The purpose of this blog is to outline the steps taken in a typical Machine Learning project and should be treated as such.</p>
+</blockquote>
+<p><strong>Link to non-sanitised notebook on Jovian.ML here </strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Import-libraries">
+<a class="anchor" href="#Import-libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Import libraries<a class="anchor-link" href="#Import-libraries"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Colab-setup-and-getting-data-from-Kaggle">
+<a class="anchor" href="#Colab-setup-and-getting-data-from-Kaggle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Colab setup and getting data from Kaggle<a class="anchor-link" href="#Colab-setup-and-getting-data-from-Kaggle"> </a>
+</h1>
+<p>I used Google Colab with GPU processing for this project because I had exhausted my Kaggle hours (30hrs/wk) working on the competition :( The challenge here was signing into Colab, setting up the working directoty and then linking to Kaggle and copying the data over. The size of the dataset was about 1.3Gb which wasn't too much of a bother as Google gives each Gmail account 15Gb for free!
+</p>
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>I used the monokai settings in Colab which gave excellent font contrast and colours for editing.<img src="https://github.com/onpointai/onpointai/blob/master/images/xray-colab-monokai.png" alt="monokai" title="LOOKING PRETTY">
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The default directory that is linked to the Google's gdrive ( the one connected to the gmail address) is /content/drive/My Drive/</p>
+<p>I created a project directory jovian-xray and use this as the new root directory.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The dataset is structured into training, val and test folders, each with sub-folders of NORMAL and PNEUMONIA images.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Data-exploration">
+<a class="anchor" href="#Data-exploration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data exploration<a class="anchor-link" href="#Data-exploration"> </a>
+</h1>
+<h2 id="Image-transforms">
+<a class="anchor" href="#Image-transforms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image transforms<a class="anchor-link" href="#Image-transforms"> </a>
+</h2>
+<p>We will now prepare the data for reading into Pytorch as numpy arrays using DataLoaders.</p>
+<p>Havig data augmentation is a good way to get extra training data for free. However, care must be taken to ensure that the transforms requested are likely to appear in the inference (or test set).</p>
+<p>The images (RGB) are normalized using the mean [0.485,0.456,0.406] and standard deviation [0.229,0.224,0.225] of that used for the Imagenet data in the Resnet model, so that the new input images have the same distribution and mean as that used in the Resnet model.</p>
+<p>I have set up two transforms dictionaries, one with and one without so it would be easy to plot images and compare.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>proj_dir = os.path.join(root_dir, 'kaggle', 'chest_xray')</p>
+<p>proj_dir</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Transfer-Learning-model">
+<a class="anchor" href="#Transfer-Learning-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transfer Learning model<a class="anchor-link" href="#Transfer-Learning-model"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Use-a-Resnet34-model-with-our-custom-classifier-for-X-ray-pneumonia-images">
+<a class="anchor" href="#Use-a-Resnet34-model-with-our-custom-classifier-for-X-ray-pneumonia-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use a Resnet34 model with our custom classifier for X-ray pneumonia images<a class="anchor-link" href="#Use-a-Resnet34-model-with-our-custom-classifier-for-X-ray-pneumonia-images"> </a>
+</h2>
+<p>The method of transfer learning is widely used to take advantage of the clever and hardworking chaps who have spent time to train a model on million+ images and save the trained model architecture and weights.</p>
+<p>The Resnet34 model has been trained on the Imagenet database which has 1000 classes <a href="https://gist.github.com/yrevar/942d3a0ac09ec9e5eb3a">from trombones to toilet tissue.</a></p>
+<p>Resnet34 has a top-most fully connected layer to predict 1000 classes. In our case we need only two so we will remove the last fc layer and add our own.</p>
+<p>Have a look <a href="https://towardsdatascience.com/understanding-and-visualizing-resnets-442284831be8">here</a> for a good explanation of Resnet architectures. Briefly, the after each set of convolutions the input is added to the output. This helps to maintain the reslotion of the input, ie do not lose any features of the input model.</p>
+<p>In a deep neural network the early layers capture generic features such as edges, texture  and colour while the latter layers capture more specific features such as cats ears, eyes, elephant trunks and so on.</p>
+<p>So our process is take the trained resnet architecture and weights, remove the head ie the last layers that are used to predict the 1000 classes and add our own tailored to the number of classes we want to predict, which in our case is two.</p>
+<p>We will do a first pass of training where the weights of the resnet model are locked ie, ie we do not want to overwrite or lose those values which will mean more GPU expense for us. Then we will unfreeze the weights and run the entire model at our prefereed laerning rate. Note, idelaly we would like to unfreeze only specific layer, say layer 1 and layer 4, which I will cover in a separate blogpost.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Setup-the-Training-(and-Validation)-model">
+<a class="anchor" href="#Setup-the-Training-(and-Validation)-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup the Training (and Validation) model<a class="anchor-link" href="#Setup-the-Training-(and-Validation)-model"> </a>
+</h1>
+<p>The dataset has training, val and tests which makes our lives a little bot easier ie we don't have to do any data splitting and can set up specific transforms for each.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Check-if-GPU-is-available">
+<a class="anchor" href="#Check-if-GPU-is-available" aria-hidden="true"><span class="octicon octicon-link"></span></a>Check if GPU is available<a class="anchor-link" href="#Check-if-GPU-is-available"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Run-the-Training-(and-Validation)-model">
+<a class="anchor" href="#Run-the-Training-(and-Validation)-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run the Training (and Validation) model<a class="anchor-link" href="#Run-the-Training-(and-Validation)-model"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Testing-(Inference)">
+<a class="anchor" href="#Testing-(Inference)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing (Inference)<a class="anchor-link" href="#Testing-(Inference)"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Save-the-interim-model-(checkpoint)">
+<a class="anchor" href="#Save-the-interim-model-(checkpoint)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Save the interim model (checkpoint)<a class="anchor-link" href="#Save-the-interim-model-(checkpoint)"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Visualise-the-Training/Validation-images">
+<a class="anchor" href="#Visualise-the-Training/Validation-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Visualise the Training/Validation images<a class="anchor-link" href="#Visualise-the-Training/Validation-images"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Visualise-the-predictions">
+<a class="anchor" href="#Visualise-the-predictions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Visualise the predictions<a class="anchor-link" href="#Visualise-the-predictions"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Lessons-Learned">
+<a class="anchor" href="#Lessons-Learned" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lessons Learned<a class="anchor-link" href="#Lessons-Learned"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>
+<p>There are five methods to reduce model overfitting.  Overfitting results when the model fits very well to the training data (low error) but not very well to the validation data (high error).
+These are:</p>
+<blockquote>
+<p>Get more data<br>
+Data augmentation<br>
+Generalizable architectures<br>
+Regularisation<br>
+Reduce architecture complexity</p>
+</blockquote>
+</li>
+<li>
+<p>Undertaking an online course like the <a href="(https://jovian.ml/forum/c/pytorch-zero-to-gans/18">Jovian Zero to Gans</a>) has been an excellent opportunity to immerse myself in Machine Learning. Taking part in the competition (which is ongoing) and writing this blog on the X-ray dataset has helped me to better understand important concepts such as Dataloaders, learning rate, batch size, optimizers and loss functions.</p>
+</li>
+<li>
+<p>Thank you to Aakash the course instructor and the rest pf the Jovian team for the efforts in helping us to better understand such an exciting paradigm.</p>
+</li>
+</ol>
+<hr>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>fin</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="onpointai/onpointai"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-project-xray-1.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/onpointai/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/onpointai/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/onpointai/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>My AI/ML Journey</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/onpointai" title="onpointai"><svg class="svg-icon grey"><use xlink:href="/onpointai/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/ddsilva333" title="ddsilva333"><svg class="svg-icon grey"><use xlink:href="/onpointai/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
