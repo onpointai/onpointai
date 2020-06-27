@@ -25,7 +25,7 @@ I will then talk about some of the lessons learned.
 
 > Warning! The purpose of this blog is to outline the steps taken in a typical Machine Learning project and should be treated as such.
 
-**Link to non-sanitised notebook on Jovian.ML here **
+The full notebook on Google Colab is [here](https://drive.google.com/file/d/10K7MonER3MAp8E_SEWrr1CC3Uk9zWcSC/view?usp=sharing). It is worth taking a peek just to see the monokai UI as snippet of which is whon below:
 
 # Import libraries
 ```
@@ -115,7 +115,8 @@ os.listdir(proj_dir)
 
 The dataset is structured into training, val and test folders, each with sub-folders of NORMAL and PNEUMONIA images.
 
-# Image transforms
+# Data exploration
+## Image transforms
 
 We will now prepare the data for reading into Pytorch as numpy arrays using DataLoaders.
 
@@ -153,7 +154,6 @@ data_no_transforms = {'train' : T.Compose([ T.ToTensor() ]),
 'test' : T.Compose([T.ToTensor() ]),
 'val' : T.Compose([T.ToTensor() ])}
 ```
-# Data exploration
 ## Dataloaders
 ```
 image_datasets = {x: datasets.ImageFolder(os.path.join(proj_dir, x),
@@ -219,11 +219,9 @@ out = torchvision.utils.make_grid(images)
 plt.figure(figsize=(8, 8))
 raw_imshow(out, title=[class_names[x] for x in classes])
 ```
-![xray-raw-images](https://github.com/onpointai/onpointai/blob/master/images/xray-raw-images.png)
+![Raw Xray Images]({{"/"|relative_url}}/images/xray-raw-images.png "Raw X-ray images")
 
-# Transfer Learning model
-
-## Resnet34 model with our custom classifier
+# Transfer Learning model (Resnet34 model with our custom classifier)
 
 The method of transfer learning is widely used to take advantage of the clever and hardworking chaps who have spent time to train a model on million+ images and save the trained model architecture and weights.
 
@@ -240,9 +238,11 @@ So our process is take the trained resnet architecture and weights, remove the h
 We will do a first pass of training where the weights of the resnet model are locked ie, ie we do not want to overwrite or lose those values which will mean more GPU expense for us. Then we will unfreeze the weights and run the entire model at our prefereed laerning rate. Note, idelaly we would like to unfreeze only specific layer, say layer 1 and layer 4, which I will cover in a separate blogpost.
 
  Build and train your network
- - 1. Load resnet-34 pre-trained network
-model = models.resnet34(pretrained=True)
 
+Load resnet-34 pre-trained network
+```
+model = models.resnet34(pretrained=True)
+```
 op:
 The tailed output of the model summary gives:
 
@@ -264,7 +264,7 @@ classifier = nn.Sequential(OrderedDict([
                           ('output', nn.LogSoftmax(dim=1))
                           ]))
 
-# Replacing the pretrained model classifier with our classifier
+## Replacing the pretrained model classifier with our classifier
 model.fc = classifier
 
 ```
@@ -283,7 +283,7 @@ def unfreeze(self):
 ```
 freeze(model)
 
-# (512 * 256 + 256) + ( 256 *2 +2)
+Count the trainable parameters to make sure we only include our new head.
 cp = count_parameters(model)
 print(f'{cp} trainable parameters in frozen model  ')
 
@@ -363,7 +363,11 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=10):
     model.load_state_dict(best_model_wts)
     return model
     ```
-## Check if GPU is available
+Check if GPU is available
+Any Deep Learning (neural network) model must be run on a GPU because the algoritms are tailored to exploit the parallel processing capabilities of these.
+So a quick check is made to see if a GPU exists so that data can be sent to this.
+Google COlab has a seeting under Edit > Notebook Settings : Select None/GPU/TPU
+TPU is for Tensor Processing Unit which is even faster than GPU.
 ```
 nThreads = 4
 batch_size = 32
@@ -382,29 +386,30 @@ print(device)
 
 Use the Adam optimizer which is the preferred optimizer because it is adaptive and adds a momentum element to the gradient stepping.
 
-#Train a model with a pre-trained network
+Train a model with a pre-trained network
 ```
 num_epochs = 10
 if use_gpu:
     print ("Using GPU: "+ str(use_gpu))
     model = model.cuda()
+```
 
-### NLLLoss because our output is LogSoftmax
+Use NLLLoss because our output is LogSoftmax
 criterion = nn.NLLLoss()
 
-#Adam optimizer with a learning rate
-optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
-#optimizer = optim.SGD(model.fc.parameters(), lr = .1, momentum=0.9)
-### Decay LR by a factor of 0.1 every 5 epochs
-exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
-```
-#### Train the frozen model where the bottom layers only are frozen
+Adam optimizer with a learning rate
+
+> optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
+> Decay LR by a factor of 0.1 every 5 epochs
+> exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
+
+Train the frozen model where the bottom layers only are frozen
 
 ```
 model_fit = train_model(model, criterion, optimizer(lr=0.001), exp_lr_scheduler, num_epochs=10)
 ```
 
-#### Unfreeze the model and train some more
+Unfreeze the model and train some more
 ```
 unfreeze(model)
 ```
@@ -447,8 +452,7 @@ checkpoint = {'input_size': [2, 224, 224],
 save_fname= os.path.join(proj_dir, '90_checkpoint.pth')
 torch.save(checkpoint,  save_fname)
 ```
-
-### Visualise the Training/Validation images
+#Visualise the Training/Validation images
 ```
 def visualize_model(model, num_images=6):
     was_training = model.training
@@ -481,10 +485,9 @@ visualize_model(model_ft)
 
 ![]({{"/"|relative_url}}/imaages/xray-visualise-model.png)
 
-### Visualise the predictions
-
+```
 print (predict('chest_xray/test/NORMAL/NORMAL2-IM-0348-0001.jpeg', loaded_model))
-
+```
 
 > (array([0.96704894, 0.03295105], dtype=float32), ['NORMAL', 'PNEUMONIA'])
  
