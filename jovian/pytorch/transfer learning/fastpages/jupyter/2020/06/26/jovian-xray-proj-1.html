@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      11 min read
+      12 min read
     
 </span></p>
 
@@ -125,28 +125,19 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h1"><a href="#about">About</a></li>
 <li class="toc-entry toc-h1"><a href="#import-libraries">Import libraries</a></li>
 <li class="toc-entry toc-h1"><a href="#colab-setup-and-getting-data-from-kaggle">Colab setup and getting data from Kaggle</a></li>
-<li class="toc-entry toc-h1"><a href="#image-transforms">Image transforms</a></li>
 <li class="toc-entry toc-h1"><a href="#data-exploration">Data exploration</a>
 <ul>
+<li class="toc-entry toc-h2"><a href="#image-transforms">Image transforms</a></li>
 <li class="toc-entry toc-h2"><a href="#dataloaders">Dataloaders</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#visualisation">Visualisation</a></li>
-<li class="toc-entry toc-h1"><a href="#transfer-learning-model">Transfer Learning model</a>
+<li class="toc-entry toc-h1"><a href="#transfer-learning-model-resnet34-model-with-our-custom-classifier">Transfer Learning model (Resnet34 model with our custom classifier)</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#resnet34-model-with-our-custom-classifier">Resnet34 model with our custom classifier</a></li>
+<li class="toc-entry toc-h2"><a href="#replacing-the-pretrained-model-classifier-with-our-classifier">Replacing the pretrained model classifier with our classifier</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#replacing-the-pretrained-model-classifier-with-our-classifier">Replacing the pretrained model classifier with our classifier</a></li>
-<li class="toc-entry toc-h1"><a href="#512--256--256---256-2-2">(512 * 256 + 256) + ( 256 *2 +2)</a></li>
-<li class="toc-entry toc-h1"><a href="#setup-the-training-and-validation-model">Setup the Training (and Validation) model</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#nllloss-because-our-output-is-logsoftmax">NLLLoss because our output is LogSoftmax</a></li>
-<li class="toc-entry toc-h3"><a href="#decay-lr-by-a-factor-of-01-every-5-epochs">Decay LR by a factor of 0.1 every 5 epochs</a></li>
-<li class="toc-entry toc-h3"><a href="#visualise-the-trainingvalidation-images">Visualise the Training/Validation images</a></li>
-<li class="toc-entry toc-h3"><a href="#visualise-the-predictions">Visualise the predictions</a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h1"><a href="#setup-the-training-and-validation-model">Setup the Training (and Validation) model</a></li>
 <li class="toc-entry toc-h1"><a href="#lessons-learned">Lessons Learned</a></li>
 </ul><h1 id="about">
 <a class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h1>
@@ -168,7 +159,7 @@ I will then talk about some of the lessons learned.</p>
   <p>Warning! The purpose of this blog is to outline the steps taken in a typical Machine Learning project and should be treated as such.</p>
 </blockquote>
 
-<p>**Link to non-sanitised notebook on Jovian.ML here **</p>
+<p>The full notebook on Google Colab is <a href="https://drive.google.com/file/d/10K7MonER3MAp8E_SEWrr1CC3Uk9zWcSC/view?usp=sharing">here</a>. It is worth taking a peek just to see the monokai UI as snippet of which is whon below:</p>
 
 <h1 id="import-libraries">
 <a class="anchor" href="#import-libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Import libraries</h1>
@@ -256,8 +247,10 @@ select New Notebook &gt; Three vertical dots, Copy API Command</p>
 
 <p>The dataset is structured into training, val and test folders, each with sub-folders of NORMAL and PNEUMONIA images.</p>
 
-<h1 id="image-transforms">
-<a class="anchor" href="#image-transforms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image transforms</h1>
+<h1 id="data-exploration">
+<a class="anchor" href="#data-exploration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data exploration</h1>
+<h2 id="image-transforms">
+<a class="anchor" href="#image-transforms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image transforms</h2>
 
 <p>We will now prepare the data for reading into Pytorch as numpy arrays using DataLoaders.</p>
 
@@ -294,8 +287,6 @@ data_no_transforms = {'train' : T.Compose([ T.ToTensor() ]),
 'test' : T.Compose([T.ToTensor() ]),
 'val' : T.Compose([T.ToTensor() ])}
 </code></pre></div></div>
-<h1 id="data-exploration">
-<a class="anchor" href="#data-exploration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data exploration</h1>
 <h2 id="dataloaders">
 <a class="anchor" href="#dataloaders" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataloaders</h2>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>image_datasets = {x: datasets.ImageFolder(os.path.join(proj_dir, x),
@@ -361,13 +352,10 @@ out = torchvision.utils.make_grid(images)
 plt.figure(figsize=(8, 8))
 raw_imshow(out, title=[class_names[x] for x in classes])
 </code></pre></div></div>
-<p><img src="https://github.com/onpointai/onpointai/blob/master/images/xray-raw-images.png" alt="xray-raw-images"></p>
+<p><img src="/onpointai//images/xray-raw-images.png" alt="Raw Xray Images" title="Raw X-ray images"></p>
 
-<h1 id="transfer-learning-model">
-<a class="anchor" href="#transfer-learning-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transfer Learning model</h1>
-
-<h2 id="resnet34-model-with-our-custom-classifier">
-<a class="anchor" href="#resnet34-model-with-our-custom-classifier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resnet34 model with our custom classifier</h2>
+<h1 id="transfer-learning-model-resnet34-model-with-our-custom-classifier">
+<a class="anchor" href="#transfer-learning-model-resnet34-model-with-our-custom-classifier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transfer Learning model (Resnet34 model with our custom classifier)</h1>
 
 <p>The method of transfer learning is widely used to take advantage of the clever and hardworking chaps who have spent time to train a model on million+ images and save the trained model architecture and weights.</p>
 
@@ -384,15 +372,10 @@ raw_imshow(out, title=[class_names[x] for x in classes])
 <p>We will do a first pass of training where the weights of the resnet model are locked ie, ie we do not want to overwrite or lose those values which will mean more GPU expense for us. Then we will unfreeze the weights and run the entire model at our prefereed laerning rate. Note, idelaly we would like to unfreeze only specific layer, say layer 1 and layer 4, which I will cover in a separate blogpost.</p>
 
 <p>Build and train your network</p>
-<ul>
-  <li>
-    <ol>
-      <li>Load resnet-34 pre-trained network
-model = models.resnet34(pretrained=True)</li>
-    </ol>
-  </li>
-</ul>
 
+<p>Load resnet-34 pre-trained network</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">model</span> <span class="p">=</span> <span class="n">models</span><span class="p">.</span><span class="n">resnet34</span><span class="p">(</span><span class="n">pretrained</span><span class="p">=</span><span class="nb">True</span><span class="p">)</span>
+</code></pre></div></div>
 <p>op:
 The tailed output of the model summary gives:</p>
 
@@ -414,8 +397,8 @@ classifier = nn.Sequential(OrderedDict([
                           (‘output’, nn.LogSoftmax(dim=1))
                           ]))</p>
 
-<h1 id="replacing-the-pretrained-model-classifier-with-our-classifier">
-<a class="anchor" href="#replacing-the-pretrained-model-classifier-with-our-classifier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Replacing the pretrained model classifier with our classifier</h1>
+<h2 id="replacing-the-pretrained-model-classifier-with-our-classifier">
+<a class="anchor" href="#replacing-the-pretrained-model-classifier-with-our-classifier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Replacing the pretrained model classifier with our classifier</h2>
 <p>model.fc = classifier</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def freeze(model):
@@ -433,9 +416,8 @@ def unfreeze(self):
 </code></pre></div></div>
 <p>freeze(model)</p>
 
-<h1 id="512--256--256---256-2-2">
-<a class="anchor" href="#512--256--256---256-2-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>(512 * 256 + 256) + ( 256 *2 +2)</h1>
-<p>cp = count_parameters(model)
+<p>Count the trainable parameters to make sure we only include our new head.
+cp = count_parameters(model)
 print(f’{cp} trainable parameters in frozen model  ‘)</p>
 
 <p>op: 131842 trainable parameters in frozen model</p>
@@ -514,7 +496,11 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=10):
     model.load_state_dict(best_model_wts)
     return model
     ```
-## Check if GPU is available
+Check if GPU is available
+Any Deep Learning (neural network) model must be run on a GPU because the algoritms are tailored to exploit the parallel processing capabilities of these.
+So a quick check is made to see if a GPU exists so that data can be sent to this.
+Google COlab has a seeting under Edit &gt; Notebook Settings : Select None/GPU/TPU
+TPU is for Tensor Processing Unit which is even faster than GPU.
 </code></pre></div></div>
 <p>nThreads = 4
 batch_size = 32
@@ -532,29 +518,28 @@ print(device)</p>
 
 Use the Adam optimizer which is the preferred optimizer because it is adaptive and adds a momentum element to the gradient stepping.
 
-#Train a model with a pre-trained network
+Train a model with a pre-trained network
 </code></pre></div></div>
 <p>num_epochs = 10
 if use_gpu:
     print (“Using GPU: “+ str(use_gpu))
     model = model.cuda()</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Use NLLLoss because our output is LogSoftmax
+criterion = nn.NLLLoss()
 
-<h3 id="nllloss-because-our-output-is-logsoftmax">
-<a class="anchor" href="#nllloss-because-our-output-is-logsoftmax" aria-hidden="true"><span class="octicon octicon-link"></span></a>NLLLoss because our output is LogSoftmax</h3>
-<p>criterion = nn.NLLLoss()</p>
+Adam optimizer with a learning rate
 
-<p>#Adam optimizer with a learning rate
-optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
-#optimizer = optim.SGD(model.fc.parameters(), lr = .1, momentum=0.9)</p>
-<h3 id="decay-lr-by-a-factor-of-01-every-5-epochs">
-<a class="anchor" href="#decay-lr-by-a-factor-of-01-every-5-epochs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decay LR by a factor of 0.1 every 5 epochs</h3>
-<p>exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#### Train the frozen model where the bottom layers only are frozen
+&gt; optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
+&gt; Decay LR by a factor of 0.1 every 5 epochs
+&gt; exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
+
+Train the frozen model where the bottom layers only are frozen
 
 </code></pre></div></div>
 <p>model_fit = train_model(model, criterion, optimizer(lr=0.001), exp_lr_scheduler, num_epochs=10)</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-#### Unfreeze the model and train some more
+Unfreeze the model and train some more
 </code></pre></div></div>
 <p>unfreeze(model)</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Testing
@@ -594,9 +579,7 @@ checkpoint = {'input_size': [2, 224, 224],
 save_fname= os.path.join(proj_dir, '90_checkpoint.pth')
 torch.save(checkpoint,  save_fname)
 </code></pre></div></div>
-
-<h3 id="visualise-the-trainingvalidation-images">
-<a class="anchor" href="#visualise-the-trainingvalidation-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Visualise the Training/Validation images</h3>
+<p>#Visualise the Training/Validation images</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def visualize_model(model, num_images=6):
     was_training = model.training
     model.eval()
@@ -628,10 +611,8 @@ visualize_model(model_ft)
 
 <p><img src="/onpointai//imaages/xray-visualise-model.png" alt=""></p>
 
-<h3 id="visualise-the-predictions">
-<a class="anchor" href="#visualise-the-predictions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Visualise the predictions</h3>
-
-<p>print (predict(‘chest_xray/test/NORMAL/NORMAL2-IM-0348-0001.jpeg’, loaded_model))</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print (predict('chest_xray/test/NORMAL/NORMAL2-IM-0348-0001.jpeg', loaded_model))
+</code></pre></div></div>
 
 <blockquote>
   <p>(array([0.96704894, 0.03295105], dtype=float32), [‘NORMAL’, ‘PNEUMONIA’])</p>

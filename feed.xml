@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://onpointai.github.io/onpointai/feed.xml" rel="self" type="application/atom+xml" /><link href="https://onpointai.github.io/onpointai/" rel="alternate" type="text/html" /><updated>2020-06-27T04:42:31-05:00</updated><id>https://onpointai.github.io/onpointai/feed.xml</id><title type="html">onpointai</title><subtitle>My AI/ML Journey</subtitle><entry><title type="html">Using Deep Learning to detect Pneumonia in X-ray images</title><link href="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1.html" rel="alternate" type="text/html" title="Using Deep Learning to detect Pneumonia in X-ray images" /><published>2020-06-26T00:00:00-05:00</published><updated>2020-06-26T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1</id><content type="html" xml:base="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1.html">&lt;h1 id=&quot;about&quot;&gt;About&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://onpointai.github.io/onpointai/feed.xml" rel="self" type="application/atom+xml" /><link href="https://onpointai.github.io/onpointai/" rel="alternate" type="text/html" /><updated>2020-06-27T05:06:50-05:00</updated><id>https://onpointai.github.io/onpointai/feed.xml</id><title type="html">onpointai</title><subtitle>My AI/ML Journey</subtitle><entry><title type="html">Using Deep Learning to detect Pneumonia in X-ray images</title><link href="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1.html" rel="alternate" type="text/html" title="Using Deep Learning to detect Pneumonia in X-ray images" /><published>2020-06-26T00:00:00-05:00</published><updated>2020-06-26T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1</id><content type="html" xml:base="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1.html">&lt;h1 id=&quot;about&quot;&gt;About&lt;/h1&gt;
 
 &lt;p&gt;This blog is towards the &lt;a href=&quot;https://jovian.ml/forum/t/assignment-5-course-project/1563&quot;&gt;Course Project&lt;/a&gt; for the [Pytorch Zero to GANS] free online course(https://jovian.ml/forum/c/pytorch-zero-to-gans/18) run by &lt;a href=&quot;https://www.jovian.ml&quot;&gt;JOVIAN.ML&lt;/a&gt;.&lt;/p&gt;
 
@@ -17,7 +17,7 @@ I will then talk about some of the lessons learned.&lt;/p&gt;
   &lt;p&gt;Warning! The purpose of this blog is to outline the steps taken in a typical Machine Learning project and should be treated as such.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;**Link to non-sanitised notebook on Jovian.ML here **&lt;/p&gt;
+&lt;p&gt;The full notebook on Google Colab is &lt;a href=&quot;https://drive.google.com/file/d/10K7MonER3MAp8E_SEWrr1CC3Uk9zWcSC/view?usp=sharing&quot;&gt;here&lt;/a&gt;. It is worth taking a peek just to see the monokai UI as snippet of which is whon below:&lt;/p&gt;
 
 &lt;h1 id=&quot;import-libraries&quot;&gt;Import libraries&lt;/h1&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import os
@@ -103,7 +103,8 @@ select New Notebook &amp;gt; Three vertical dots, Copy API Command&lt;/p&gt;
 
 &lt;p&gt;The dataset is structured into training, val and test folders, each with sub-folders of NORMAL and PNEUMONIA images.&lt;/p&gt;
 
-&lt;h1 id=&quot;image-transforms&quot;&gt;Image transforms&lt;/h1&gt;
+&lt;h1 id=&quot;data-exploration&quot;&gt;Data exploration&lt;/h1&gt;
+&lt;h2 id=&quot;image-transforms&quot;&gt;Image transforms&lt;/h2&gt;
 
 &lt;p&gt;We will now prepare the data for reading into Pytorch as numpy arrays using DataLoaders.&lt;/p&gt;
 
@@ -140,7 +141,6 @@ data_no_transforms = {'train' : T.Compose([ T.ToTensor() ]),
 'test' : T.Compose([T.ToTensor() ]),
 'val' : T.Compose([T.ToTensor() ])}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h1 id=&quot;data-exploration&quot;&gt;Data exploration&lt;/h1&gt;
 &lt;h2 id=&quot;dataloaders&quot;&gt;Dataloaders&lt;/h2&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;image_datasets = {x: datasets.ImageFolder(os.path.join(proj_dir, x),
                                           data_transforms[x]) for x in ['train', 'val','test']}
@@ -204,11 +204,9 @@ out = torchvision.utils.make_grid(images)
 plt.figure(figsize=(8, 8))
 raw_imshow(out, title=[class_names[x] for x in classes])
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;https://github.com/onpointai/onpointai/blob/master/images/xray-raw-images.png&quot; alt=&quot;xray-raw-images&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/onpointai//images/xray-raw-images.png&quot; alt=&quot;Raw Xray Images&quot; title=&quot;Raw X-ray images&quot; /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;transfer-learning-model&quot;&gt;Transfer Learning model&lt;/h1&gt;
-
-&lt;h2 id=&quot;resnet34-model-with-our-custom-classifier&quot;&gt;Resnet34 model with our custom classifier&lt;/h2&gt;
+&lt;h1 id=&quot;transfer-learning-model-resnet34-model-with-our-custom-classifier&quot;&gt;Transfer Learning model (Resnet34 model with our custom classifier)&lt;/h1&gt;
 
 &lt;p&gt;The method of transfer learning is widely used to take advantage of the clever and hardworking chaps who have spent time to train a model on million+ images and save the trained model architecture and weights.&lt;/p&gt;
 
@@ -225,15 +223,10 @@ raw_imshow(out, title=[class_names[x] for x in classes])
 &lt;p&gt;We will do a first pass of training where the weights of the resnet model are locked ie, ie we do not want to overwrite or lose those values which will mean more GPU expense for us. Then we will unfreeze the weights and run the entire model at our prefereed laerning rate. Note, idelaly we would like to unfreeze only specific layer, say layer 1 and layer 4, which I will cover in a separate blogpost.&lt;/p&gt;
 
 &lt;p&gt;Build and train your network&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;ol&gt;
-      &lt;li&gt;Load resnet-34 pre-trained network
-model = models.resnet34(pretrained=True)&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
 
+&lt;p&gt;Load resnet-34 pre-trained network&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resnet34&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pretrained&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;op:
 The tailed output of the model summary gives:&lt;/p&gt;
 
@@ -255,7 +248,7 @@ classifier = nn.Sequential(OrderedDict([
                           (‘output’, nn.LogSoftmax(dim=1))
                           ]))&lt;/p&gt;
 
-&lt;h1 id=&quot;replacing-the-pretrained-model-classifier-with-our-classifier&quot;&gt;Replacing the pretrained model classifier with our classifier&lt;/h1&gt;
+&lt;h2 id=&quot;replacing-the-pretrained-model-classifier-with-our-classifier&quot;&gt;Replacing the pretrained model classifier with our classifier&lt;/h2&gt;
 &lt;p&gt;model.fc = classifier&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def freeze(model):
@@ -273,8 +266,8 @@ def unfreeze(self):
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;freeze(model)&lt;/p&gt;
 
-&lt;h1 id=&quot;512--256--256---256-2-2&quot;&gt;(512 * 256 + 256) + ( 256 *2 +2)&lt;/h1&gt;
-&lt;p&gt;cp = count_parameters(model)
+&lt;p&gt;Count the trainable parameters to make sure we only include our new head.
+cp = count_parameters(model)
 print(f’{cp} trainable parameters in frozen model  ‘)&lt;/p&gt;
 
 &lt;p&gt;op: 131842 trainable parameters in frozen model&lt;/p&gt;
@@ -352,7 +345,11 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=10):
     model.load_state_dict(best_model_wts)
     return model
     ```
-## Check if GPU is available
+Check if GPU is available
+Any Deep Learning (neural network) model must be run on a GPU because the algoritms are tailored to exploit the parallel processing capabilities of these.
+So a quick check is made to see if a GPU exists so that data can be sent to this.
+Google COlab has a seeting under Edit &amp;gt; Notebook Settings : Select None/GPU/TPU
+TPU is for Tensor Processing Unit which is even faster than GPU.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;nThreads = 4
 batch_size = 32
@@ -370,27 +367,28 @@ print(device)&lt;/p&gt;
 
 Use the Adam optimizer which is the preferred optimizer because it is adaptive and adds a momentum element to the gradient stepping.
 
-#Train a model with a pre-trained network
+Train a model with a pre-trained network
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;num_epochs = 10
 if use_gpu:
     print (“Using GPU: “+ str(use_gpu))
     model = model.cuda()&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+Use NLLLoss because our output is LogSoftmax
+criterion = nn.NLLLoss()
 
-&lt;h3 id=&quot;nllloss-because-our-output-is-logsoftmax&quot;&gt;NLLLoss because our output is LogSoftmax&lt;/h3&gt;
-&lt;p&gt;criterion = nn.NLLLoss()&lt;/p&gt;
+Adam optimizer with a learning rate
 
-&lt;p&gt;#Adam optimizer with a learning rate
-optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
-#optimizer = optim.SGD(model.fc.parameters(), lr = .1, momentum=0.9)&lt;/p&gt;
-&lt;h3 id=&quot;decay-lr-by-a-factor-of-01-every-5-epochs&quot;&gt;Decay LR by a factor of 0.1 every 5 epochs&lt;/h3&gt;
-&lt;p&gt;exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#### Train the frozen model where the bottom layers only are frozen
+&amp;gt; optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
+&amp;gt; Decay LR by a factor of 0.1 every 5 epochs
+&amp;gt; exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
+
+Train the frozen model where the bottom layers only are frozen
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;model_fit = train_model(model, criterion, optimizer(lr=0.001), exp_lr_scheduler, num_epochs=10)&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-#### Unfreeze the model and train some more
+Unfreeze the model and train some more
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;unfreeze(model)&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Testing
@@ -430,8 +428,7 @@ checkpoint = {'input_size': [2, 224, 224],
 save_fname= os.path.join(proj_dir, '90_checkpoint.pth')
 torch.save(checkpoint,  save_fname)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;visualise-the-trainingvalidation-images&quot;&gt;Visualise the Training/Validation images&lt;/h3&gt;
+&lt;p&gt;#Visualise the Training/Validation images&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def visualize_model(model, num_images=6):
     was_training = model.training
     model.eval()
@@ -463,9 +460,8 @@ visualize_model(model_ft)
 
 &lt;p&gt;&lt;img src=&quot;/onpointai//imaages/xray-visualise-model.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;visualise-the-predictions&quot;&gt;Visualise the predictions&lt;/h3&gt;
-
-&lt;p&gt;print (predict(‘chest_xray/test/NORMAL/NORMAL2-IM-0348-0001.jpeg’, loaded_model))&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;print (predict('chest_xray/test/NORMAL/NORMAL2-IM-0348-0001.jpeg', loaded_model))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;(array([0.96704894, 0.03295105], dtype=float32), [‘NORMAL’, ‘PNEUMONIA’])&lt;/p&gt;
