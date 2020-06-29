@@ -362,8 +362,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=10):
     # load best model weights
     model.load_state_dict(best_model_wts)
     return model
-    ```
-Check if GPU is available
+```
+## Check if a GPU is available
 Any Deep Learning (neural network) model must be run on a GPU because the algoritms are tailored to exploit the parallel processing capabilities of these.
 So a quick check is made to see if a GPU exists so that data can be sent to this.
 Google COlab has a seeting under Edit > Notebook Settings : Select None/GPU/TPU
@@ -524,7 +524,7 @@ These are:
 
 ------
 
-Hope you enjoyed it
+I will keep updating this blog with better images from Colab (nned to set the background to light).
 
 ---
 
