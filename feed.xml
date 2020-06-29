@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://onpointai.github.io/onpointai/feed.xml" rel="self" type="application/atom+xml" /><link href="https://onpointai.github.io/onpointai/" rel="alternate" type="text/html" /><updated>2020-06-27T05:06:50-05:00</updated><id>https://onpointai.github.io/onpointai/feed.xml</id><title type="html">onpointai</title><subtitle>My AI/ML Journey</subtitle><entry><title type="html">Using Deep Learning to detect Pneumonia in X-ray images</title><link href="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1.html" rel="alternate" type="text/html" title="Using Deep Learning to detect Pneumonia in X-ray images" /><published>2020-06-26T00:00:00-05:00</published><updated>2020-06-26T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1</id><content type="html" xml:base="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1.html">&lt;h1 id=&quot;about&quot;&gt;About&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://onpointai.github.io/onpointai/feed.xml" rel="self" type="application/atom+xml" /><link href="https://onpointai.github.io/onpointai/" rel="alternate" type="text/html" /><updated>2020-06-29T11:44:22-05:00</updated><id>https://onpointai.github.io/onpointai/feed.xml</id><title type="html">onpointai</title><subtitle>My AI/ML Journey</subtitle><entry><title type="html">Using Deep Learning to detect Pneumonia in X-ray images</title><link href="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1.html" rel="alternate" type="text/html" title="Using Deep Learning to detect Pneumonia in X-ray images" /><published>2020-06-26T00:00:00-05:00</published><updated>2020-06-26T00:00:00-05:00</updated><id>https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1</id><content type="html" xml:base="https://onpointai.github.io/onpointai/jovian/pytorch/transfer%20learning/fastpages/jupyter/2020/06/26/jovian-xray-proj-1.html">&lt;h1 id=&quot;about&quot;&gt;About&lt;/h1&gt;
 
 &lt;p&gt;This blog is towards the &lt;a href=&quot;https://jovian.ml/forum/t/assignment-5-course-project/1563&quot;&gt;Course Project&lt;/a&gt; for the [Pytorch Zero to GANS] free online course(https://jovian.ml/forum/c/pytorch-zero-to-gans/18) run by &lt;a href=&quot;https://www.jovian.ml&quot;&gt;JOVIAN.ML&lt;/a&gt;.&lt;/p&gt;
 
@@ -344,75 +344,77 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=10):
     # load best model weights
     model.load_state_dict(best_model_wts)
     return model
-    ```
-Check if GPU is available
-Any Deep Learning (neural network) model must be run on a GPU because the algoritms are tailored to exploit the parallel processing capabilities of these.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;check-if-a-gpu-is-available&quot;&gt;Check if a GPU is available&lt;/h2&gt;
+&lt;p&gt;Any Deep Learning (neural network) model must be run on a GPU because the algoritms are tailored to exploit the parallel processing capabilities of these.
 So a quick check is made to see if a GPU exists so that data can be sent to this.
 Google COlab has a seeting under Edit &amp;gt; Notebook Settings : Select None/GPU/TPU
-TPU is for Tensor Processing Unit which is even faster than GPU.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;nThreads = 4
+TPU is for Tensor Processing Unit which is even faster than GPU.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nThreads = 4
 batch_size = 32
 use_gpu = torch.cuda.is_available()
-train_on_gpu = torch.cuda.is_available()&lt;/p&gt;
+train_on_gpu = torch.cuda.is_available()
 
-&lt;p&gt;if not train_on_gpu:
-    print(‘CUDA is not available.  Training on CPU …’)
+if not train_on_gpu:
+    print('CUDA is not available.  Training on CPU ...')
 else:
-    print(‘CUDA is available!  Training on GPU …’)&lt;/p&gt;
+    print('CUDA is available!  Training on GPU ...')
 
-&lt;p&gt;device = torch.device(“cuda:0” if torch.cuda.is_available() else “cpu”)
-print(device)&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Run the Training (and Validation) model
-
-Use the Adam optimizer which is the preferred optimizer because it is adaptive and adds a momentum element to the gradient stepping.
-
-Train a model with a pre-trained network
+device = torch.device(&quot;cuda:0&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+print(device)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;num_epochs = 10
-if use_gpu:
-    print (“Using GPU: “+ str(use_gpu))
-    model = model.cuda()&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-Use NLLLoss because our output is LogSoftmax
-criterion = nn.NLLLoss()
+&lt;h1 id=&quot;run-the-training-and-validation-model&quot;&gt;Run the Training (and Validation) model&lt;/h1&gt;
 
-Adam optimizer with a learning rate
+&lt;p&gt;Use the Adam optimizer which is the preferred optimizer because it is adaptive and adds a momentum element to the gradient stepping.&lt;/p&gt;
 
-&amp;gt; optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
-&amp;gt; Decay LR by a factor of 0.1 every 5 epochs
-&amp;gt; exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
-
-Train the frozen model where the bottom layers only are frozen
-
+&lt;p&gt;Train a model with a pre-trained network&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;num_epochs&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;use_gpu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Using GPU: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;use_gpu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;model_fit = train_model(model, criterion, optimizer(lr=0.001), exp_lr_scheduler, num_epochs=10)&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-Unfreeze the model and train some more
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;unfreeze(model)&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Testing
 
-Do validation on the test set
+&lt;p&gt;Use NLLLoss because our output is LogSoftmax
+criterion = nn.NLLLoss()&lt;/p&gt;
+
+&lt;p&gt;Adam optimizer with a learning rate&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
+Decay LR by a factor of 0.1 every 5 epochs
+exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Train the frozen model where the bottom layers only are frozen&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;model_fit = train_model(model, criterion, optimizer(lr=0.001), exp_lr_scheduler, num_epochs=10)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;def test(model, dataloaders, device):
+
+&lt;p&gt;Unfreeze the model and train some more&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;unfreeze(model)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h1 id=&quot;testing&quot;&gt;Testing&lt;/h1&gt;
+
+&lt;p&gt;Do validation on the test set&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def test(model, dataloaders, device):
   model.eval()
-  accuracy = 0&lt;/p&gt;
-
-&lt;p&gt;model.to(device)&lt;/p&gt;
-
-&lt;p&gt;for images, labels in dataloaders[‘test’]:
+  accuracy = 0
+  
+  model.to(device)
+    
+  for images, labels in dataloaders['test']:
     images = Variable(images)
     labels = Variable(labels)
-    images, labels = images.to(device), labels.to(device)&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;output = model.forward(images)
-ps = torch.exp(output)
-equality = (labels.data == ps.max(1)[1])
-accuracy += equality.type_as(torch.FloatTensor()).mean()
-  
-print(&quot;Testing Accuracy: {:.3f}&quot;.format(accuracy/len(dataloaders['test']))) ``` test(model, dataloaders, device)
+    images, labels = images.to(device), labels.to(device)
+      
+    output = model.forward(images)
+    ps = torch.exp(output)
+    equality = (labels.data == ps.max(1)[1])
+    accuracy += equality.type_as(torch.FloatTensor()).mean()
+      
+    print(&quot;Testing Accuracy: {:.3f}&quot;.format(accuracy/len(dataloaders['test'])))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;test(model, dataloaders, device)&lt;/p&gt;
 
 &lt;p&gt;Save the checkpoint&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;model.class_to_idx = dataloaders['train'].dataset.class_to_idx
@@ -502,7 +504,7 @@ Reduce architecture complexity&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;Hope you enjoyed it&lt;/p&gt;
+&lt;p&gt;I will keep updating this blog with better images from Colab (nned to set the background to light).&lt;/p&gt;
 
 &lt;hr /&gt;
 

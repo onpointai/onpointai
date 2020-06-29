@@ -137,7 +137,13 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#replacing-the-pretrained-model-classifier-with-our-classifier">Replacing the pretrained model classifier with our classifier</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#setup-the-training-and-validation-model">Setup the Training (and Validation) model</a></li>
+<li class="toc-entry toc-h1"><a href="#setup-the-training-and-validation-model">Setup the Training (and Validation) model</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#check-if-a-gpu-is-available">Check if a GPU is available</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#run-the-training-and-validation-model">Run the Training (and Validation) model</a></li>
+<li class="toc-entry toc-h1"><a href="#testing">Testing</a></li>
 <li class="toc-entry toc-h1"><a href="#lessons-learned">Lessons Learned</a></li>
 </ul><h1 id="about">
 <a class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h1>
@@ -495,75 +501,80 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=10):
     # load best model weights
     model.load_state_dict(best_model_wts)
     return model
-    ```
-Check if GPU is available
-Any Deep Learning (neural network) model must be run on a GPU because the algoritms are tailored to exploit the parallel processing capabilities of these.
+</code></pre></div></div>
+<h2 id="check-if-a-gpu-is-available">
+<a class="anchor" href="#check-if-a-gpu-is-available" aria-hidden="true"><span class="octicon octicon-link"></span></a>Check if a GPU is available</h2>
+<p>Any Deep Learning (neural network) model must be run on a GPU because the algoritms are tailored to exploit the parallel processing capabilities of these.
 So a quick check is made to see if a GPU exists so that data can be sent to this.
 Google COlab has a seeting under Edit &gt; Notebook Settings : Select None/GPU/TPU
-TPU is for Tensor Processing Unit which is even faster than GPU.
-</code></pre></div></div>
-<p>nThreads = 4
+TPU is for Tensor Processing Unit which is even faster than GPU.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nThreads = 4
 batch_size = 32
 use_gpu = torch.cuda.is_available()
-train_on_gpu = torch.cuda.is_available()</p>
+train_on_gpu = torch.cuda.is_available()
 
-<p>if not train_on_gpu:
-    print(‘CUDA is not available.  Training on CPU …’)
+if not train_on_gpu:
+    print('CUDA is not available.  Training on CPU ...')
 else:
-    print(‘CUDA is available!  Training on GPU …’)</p>
+    print('CUDA is available!  Training on GPU ...')
 
-<p>device = torch.device(“cuda:0” if torch.cuda.is_available() else “cpu”)
-print(device)</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Run the Training (and Validation) model
-
-Use the Adam optimizer which is the preferred optimizer because it is adaptive and adds a momentum element to the gradient stepping.
-
-Train a model with a pre-trained network
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
 </code></pre></div></div>
-<p>num_epochs = 10
-if use_gpu:
-    print (“Using GPU: “+ str(use_gpu))
-    model = model.cuda()</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Use NLLLoss because our output is LogSoftmax
-criterion = nn.NLLLoss()
+<h1 id="run-the-training-and-validation-model">
+<a class="anchor" href="#run-the-training-and-validation-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run the Training (and Validation) model</h1>
 
-Adam optimizer with a learning rate
+<p>Use the Adam optimizer which is the preferred optimizer because it is adaptive and adds a momentum element to the gradient stepping.</p>
 
-&gt; optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
-&gt; Decay LR by a factor of 0.1 every 5 epochs
-&gt; exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
-
-Train the frozen model where the bottom layers only are frozen
-
+<p>Train a model with a pre-trained network</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">num_epochs</span> <span class="p">=</span> <span class="m">10</span>
+<span class="k">if</span> <span class="n">use_gpu</span><span class="p">:</span>
+    <span class="n">print</span> <span class="p">(</span><span class="s2">"Using GPU: "</span><span class="p">+</span> <span class="n">str</span><span class="p">(</span><span class="n">use_gpu</span><span class="p">))</span>
+    <span class="k">model</span> <span class="p">=</span> <span class="k">model</span><span class="p">.</span><span class="n">cuda</span><span class="p">()</span>
 </code></pre></div></div>
-<p>model_fit = train_model(model, criterion, optimizer(lr=0.001), exp_lr_scheduler, num_epochs=10)</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Unfreeze the model and train some more
-</code></pre></div></div>
-<p>unfreeze(model)</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Testing
 
-Do validation on the test set
+<p>Use NLLLoss because our output is LogSoftmax
+criterion = nn.NLLLoss()</p>
+
+<p>Adam optimizer with a learning rate</p>
+
+<blockquote>
+  <p>optimizer = torch.optim.Adam(model.fc.parameters(), lr=0.0001)
+Decay LR by a factor of 0.1 every 5 epochs
+exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)</p>
+</blockquote>
+
+<p>Train the frozen model where the bottom layers only are frozen</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>model_fit = train_model(model, criterion, optimizer(lr=0.001), exp_lr_scheduler, num_epochs=10)
 </code></pre></div></div>
-<p>def test(model, dataloaders, device):
+
+<p>Unfreeze the model and train some more</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unfreeze(model)
+</code></pre></div></div>
+<h1 id="testing">
+<a class="anchor" href="#testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing</h1>
+
+<p>Do validation on the test set</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def test(model, dataloaders, device):
   model.eval()
-  accuracy = 0</p>
-
-<p>model.to(device)</p>
-
-<p>for images, labels in dataloaders[‘test’]:
+  accuracy = 0
+  
+  model.to(device)
+    
+  for images, labels in dataloaders['test']:
     images = Variable(images)
     labels = Variable(labels)
-    images, labels = images.to(device), labels.to(device)</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>output = model.forward(images)
-ps = torch.exp(output)
-equality = (labels.data == ps.max(1)[1])
-accuracy += equality.type_as(torch.FloatTensor()).mean()
-  
-print("Testing Accuracy: {:.3f}".format(accuracy/len(dataloaders['test']))) ``` test(model, dataloaders, device)
+    images, labels = images.to(device), labels.to(device)
+      
+    output = model.forward(images)
+    ps = torch.exp(output)
+    equality = (labels.data == ps.max(1)[1])
+    accuracy += equality.type_as(torch.FloatTensor()).mean()
+      
+    print("Testing Accuracy: {:.3f}".format(accuracy/len(dataloaders['test'])))
 </code></pre></div></div>
+<p>test(model, dataloaders, device)</p>
 
 <p>Save the checkpoint</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>model.class_to_idx = dataloaders['train'].dataset.class_to_idx
@@ -654,7 +665,7 @@ Reduce architecture complexity</p>
 
 <hr>
 
-<p>Hope you enjoyed it</p>
+<p>I will keep updating this blog with better images from Colab (nned to set the background to light).</p>
 
 <hr>
 
