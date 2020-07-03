@@ -616,12 +616,9 @@ torch.save(checkpoint,  save_fname)
                     model.train(mode=was_training)
                     return
         model.train(mode=was_training)
-
-visualize_model(model_ft)
 </code></pre></div></div>
-
-<p><img src="/onpointai//imaages/xray-visualise-model.png" alt=""></p>
-
+<p>visualize_model(model_ft)<br>
+<img src="/onpointai//images/xray-visualise-model.png" alt=""></p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print (predict('chest_xray/test/NORMAL/NORMAL2-IM-0348-0001.jpeg', loaded_model))
 </code></pre></div></div>
 
