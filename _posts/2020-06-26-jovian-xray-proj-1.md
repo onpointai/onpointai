@@ -480,8 +480,10 @@ def visualize_model(model, num_images=6):
                     return
         model.train(mode=was_training)
 ```
+
 visualize_model(model_ft)  
 ![]({{"/"|relative_url}}/images/xray-visualise-model.png)
+
 ```
 print (predict('chest_xray/test/NORMAL/NORMAL2-IM-0348-0001.jpeg', loaded_model))
 ```
