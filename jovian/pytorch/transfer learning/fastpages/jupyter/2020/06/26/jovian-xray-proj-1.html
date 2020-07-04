@@ -630,17 +630,17 @@ torch.save(checkpoint,  save_fname)
 
 <p>The NORMAL probablility is much larger than the one for pneumonia.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>img = os.path.join(proj_dir, 'test/NORMAL/NORMAL2-IM-0347-0001.jpeg')
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>img = os.path.join(proj_dir, 'test/NORMAL/NORMAL2-IM-0337-0001.jpeg')
 p, c = predict(img, loaded_model)
 view_classify(img, p, c, class_names)
 </code></pre></div></div>
-<p><img src="/onpointai//images/xray-predict-1.png" alt=""></p>
+<p><img src="/onpointai//images/xray-predict-1.png%20=%20200,100" alt=""></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>img = os.path.join(proj_dir, 'test/PNEUMONIA/person85_bacteria_421.jpeg')
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>img = os.path.join(proj_dir, 'test/PNEUMONIA/person99_bacteria_474.jpeg')
 p, c = predict(img, loaded_model)
 view_classify(img, p, c, class_names)
 </code></pre></div></div>
-<p><img src="/onpointai//images/xray-predict-2.png" alt=""></p>
+<p><img src="/onpointai//images/xray-predict-2.png%20=%20300,200" alt=""></p>
 
 <h1 id="lessons-learned">
 <a class="anchor" href="#lessons-learned" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lessons Learned</h1>
