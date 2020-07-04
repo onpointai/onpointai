@@ -497,14 +497,14 @@ img = os.path.join(proj_dir, 'test/NORMAL/NORMAL2-IM-0337-0001.jpeg')
 p, c = predict(img, loaded_model)
 view_classify(img, p, c, class_names)
 ```
-![]({{"/"|relative_url}}/images/xray-predict-1.png = 200,100)
+![]({{"/"|relative_url}}/images/xray-predict-1.png)
 
 ```
 img = os.path.join(proj_dir, 'test/PNEUMONIA/person99_bacteria_474.jpeg')
 p, c = predict(img, loaded_model)
 view_classify(img, p, c, class_names)
 ```
-![]({{"/"|relative_url}}/images/xray-predict-2.png = 300,200)
+![]({{"/"|relative_url}}/images/xray-predict-2.png)
 
 # Lessons Learned
 
