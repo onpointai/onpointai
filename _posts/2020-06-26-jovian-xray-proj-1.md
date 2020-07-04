@@ -521,10 +521,7 @@ These are:
 
 3. Thank you to Aakash the course instructor and the rest pf the Jovian team for the efforts in helping us to better understand such an exciting paradigm.
 
-------
-
-I will keep updating this blog with better images from Colab (nned to set the background to light).
-
+:bowtie:
 ---
 
 ![]({{"/"|relative_url}}/images/onpointai_logo.gif)
