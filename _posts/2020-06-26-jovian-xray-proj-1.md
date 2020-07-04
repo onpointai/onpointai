@@ -493,18 +493,18 @@ print (predict('chest_xray/test/NORMAL/NORMAL2-IM-0348-0001.jpeg', loaded_model)
  The NORMAL probablility is much larger than the one for pneumonia.
 
 ```
-img = os.path.join(proj_dir, 'test/NORMAL/NORMAL2-IM-0347-0001.jpeg')
+img = os.path.join(proj_dir, 'test/NORMAL/NORMAL2-IM-0337-0001.jpeg')
 p, c = predict(img, loaded_model)
 view_classify(img, p, c, class_names)
 ```
-![]({{"/"|relative_url}}/images/xray-predict-1.png)
+![]({{"/"|relative_url}}/images/xray-predict-1.png = 200,100)
 
 ```
-img = os.path.join(proj_dir, 'test/PNEUMONIA/person85_bacteria_421.jpeg')
+img = os.path.join(proj_dir, 'test/PNEUMONIA/person99_bacteria_474.jpeg')
 p, c = predict(img, loaded_model)
 view_classify(img, p, c, class_names)
 ```
-![]({{"/"|relative_url}}/images/xray-predict-2.png)
+![]({{"/"|relative_url}}/images/xray-predict-2.png = 300,200)
 
 # Lessons Learned
 
